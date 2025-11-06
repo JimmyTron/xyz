@@ -224,7 +224,7 @@ function App() {
         </div>
         <div className="footer-bottom">
           <div className="footer-copyright">
-            <p>&copy; 2024 Jimmy Tron. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} Jimmy Tron. All rights reserved.</p>
             <p>Make IT Happen</p>
           </div>
         </div>
