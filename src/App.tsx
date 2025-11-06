@@ -88,7 +88,7 @@ function App() {
             LET'S GET TO WORK
             <i className="fas fa-arrow-right"></i>
           </button>
-          <div className="availability">Wagwan</div>
+          <div className="availability">Hello World</div>
         </div>
       </header>
 
