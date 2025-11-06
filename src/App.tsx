@@ -58,7 +58,9 @@ interface SocialLink {
 const socialLinks: SocialLink[] = [
   { icon: 'fab fa-github', url: '#', label: 'GitHub' },
   { icon: 'fab fa-linkedin', url: '#', label: 'LinkedIn' },
-  { icon: 'fab fa-twitter', url: '#', label: 'Twitter' },
+  { icon: 'fa-brands fa-x', url: '#', label: 'X' },
+  { icon: 'fab fa-medium', url: '#', label: 'Medium' },
+  { icon: 'fab fa-hashnode', url: '#', label: 'Hashnode' },
   { icon: 'fas fa-envelope', url: '#', label: 'Email' },
 ]
 
