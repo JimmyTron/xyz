@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 
 interface ContentBlock {
@@ -124,7 +123,7 @@ function App() {
 
       {/* Content Blocks */}
       <main className="content-blocks">
-        {contentBlocks.map((block, index) => (
+        {contentBlocks.map((block) => (
           <section key={block.id} className={`content-block ${block.align}`}>
             {block.align === 'left' ? (
               <>
