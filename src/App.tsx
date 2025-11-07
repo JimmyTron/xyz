@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import './App.css'
+import { submitContactForm } from './lib/supabase'
 
 interface ContentBlock {
   id: string
@@ -65,16 +67,103 @@ const socialLinks: SocialLink[] = [
 ]
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [formData, setFormData] = useState({
+    requestType: '',
+    email: '',
+    name: '',
+    message: ''
+  })
+
   const handleCTAClick = (blockId: string) => {
-    console.log(`CTA clicked for ${blockId}`)
+    if (blockId === 'contact') {
+      setIsModalOpen(true)
+    } else {
+      console.log(`CTA clicked for ${blockId}`)
+    }
   }
 
   const handleHireNow = () => {
-    console.log('Hire Now clicked')
+    setIsModalOpen(true)
   }
 
   const handleDownloadCV = () => {
     console.log('Download CV clicked')
+  }
+
+  const handlePlatformClick = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+    setSubmitError(null)
+    // Reset form
+    setFormData({
+      requestType: '',
+      email: '',
+      name: '',
+      message: ''
+    })
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      requestType: e.target.value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSubmitError(null)
+    setIsSubmitting(true)
+
+    try {
+      // Validate required fields
+      if (!formData.requestType || !formData.email) {
+        throw new Error('Please fill in all required fields.')
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(formData.email)) {
+        throw new Error('Please enter a valid email address.')
+      }
+
+      // Submit to Supabase
+      const result = await submitContactForm({
+        requestType: formData.requestType as 'virtual-call' | 'task-request',
+        email: formData.email,
+        name: formData.name,
+        message: formData.message
+      })
+
+      if (result.success) {
+        // Success - show confirmation and close modal
+        alert('Thank you for your request! I will get back to you soon.')
+        handleCloseModal()
+      } else {
+        // Error from Supabase
+        throw new Error(result.error || 'Failed to submit form. Please try again.')
+      }
+    } catch (error: any) {
+      // Handle errors
+      setSubmitError(error.message || 'An error occurred. Please try again.')
+      console.error('Form submission error:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -115,11 +204,11 @@ function App() {
       {/* Platform Logos */}
       <section className="platforms">
         <div className="platform-logos">
-          <span>GitHub</span>
-          <span>LinkedIn</span>
-          <span>Portfolio</span>
-          <span>Resume</span>
-          <span>Contact</span>
+          <span onClick={handlePlatformClick}>GitHub</span>
+          <span onClick={handlePlatformClick}>LinkedIn</span>
+          <span onClick={handlePlatformClick}>Portfolio</span>
+          <span onClick={handlePlatformClick}>Resume</span>
+          <span onClick={handlePlatformClick}>Contact</span>
         </div>
       </section>
 
@@ -209,6 +298,129 @@ function App() {
           </button>
         </div>
       </section>
+
+      {/* Contact Modal */}
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={handleCloseModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={handleCloseModal}>
+              <i className="fas fa-times"></i>
+            </button>
+            <div className="modal-header">
+              <h2>LET'S GET TO WORK</h2>
+              <p>Fill out the form below and I'll get back to you</p>
+            </div>
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">Request Type *</label>
+                <div className="radio-group">
+                  <label className="radio-option">
+                    <input
+                      type="radio"
+                      name="requestType"
+                      value="virtual-call"
+                      checked={formData.requestType === 'virtual-call'}
+                      onChange={handleRadioChange}
+                      required
+                    />
+                    <span className="radio-label">
+                      <i className="fas fa-video"></i>
+                      Virtual Call
+                    </span>
+                    <span className="radio-note">* Schedule availability required</span>
+                  </label>
+                  <label className="radio-option">
+                    <input
+                      type="radio"
+                      name="requestType"
+                      value="task-request"
+                      checked={formData.requestType === 'task-request'}
+                      onChange={handleRadioChange}
+                      required
+                    />
+                    <span className="radio-label">
+                      <i className="fas fa-tasks"></i>
+                      Task Request
+                    </span>
+                    <span className="radio-note">* Schedule availability required</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="name" className="form-label">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="form-input"
+                  placeholder="Your name"
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email" className="form-label">Email *</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="form-input"
+                  placeholder="your.email@example.com"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="message" className="form-label">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  className="form-textarea"
+                  placeholder="Tell me about your project or what you'd like to discuss..."
+                  rows={5}
+                />
+              </div>
+
+              {submitError && (
+                <div className="form-error" style={{ 
+                  color: '#ff4444', 
+                  padding: '10px', 
+                  backgroundColor: '#ffe6e6', 
+                  borderRadius: '4px',
+                  marginBottom: '15px'
+                }}>
+                  {submitError}
+                </div>
+              )}
+
+              <div className="form-actions">
+                <button 
+                  type="button" 
+                  className="btn-cancel" 
+                  onClick={handleCloseModal}
+                  disabled={isSubmitting}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="btn-submit"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Request'}
+                  {!isSubmitting && <i className="fas fa-arrow-right"></i>}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="footer">
