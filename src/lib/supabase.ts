@@ -35,11 +35,15 @@ export async function submitContactForm(data: {
 }) {
   try {
     // Transform camelCase to snake_case for database
+    // Only include optional fields if they have values
+    const trimmedName = data.name.trim()
+    const trimmedMessage = data.message.trim()
+    
     const submissionData: ContactSubmission = {
       request_type: data.requestType,
       email: data.email.trim(),
-      name: data.name.trim() || null,
-      message: data.message.trim() || null,
+      ...(trimmedName && { name: trimmedName }),
+      ...(trimmedMessage && { message: trimmedMessage }),
     }
 
     // Insert into Supabase
@@ -63,4 +67,3 @@ export async function submitContactForm(data: {
     }
   }
 }
-
