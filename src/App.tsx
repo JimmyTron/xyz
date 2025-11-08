@@ -68,6 +68,7 @@ const socialLinks: SocialLink[] = [
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [formData, setFormData] = useState({
@@ -150,9 +151,9 @@ function App() {
       })
 
       if (result.success) {
-        // Success - show confirmation and close modal
-        alert('Thank you for your request! I will get back to you soon.')
+        // Success - show confirmation modal and close form modal
         handleCloseModal()
+        setIsSuccessModalOpen(true)
       } else {
         // Error from Supabase
         throw new Error(result.error || 'Failed to submit form. Please try again.')
@@ -418,6 +419,27 @@ function App() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Success Modal */}
+      {isSuccessModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsSuccessModalOpen(false)}>
+          <div className="success-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="success-modal-content">
+              <div className="success-icon">
+                <i className="fas fa-check-circle"></i>
+              </div>
+              <h2>Thank You!</h2>
+              <p>Thank you for your request! I will get back to you soon.</p>
+              <button 
+                className="btn-success-ok" 
+                onClick={() => setIsSuccessModalOpen(false)}
+              >
+                OK
+              </button>
+            </div>
           </div>
         </div>
       )}
