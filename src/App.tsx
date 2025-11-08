@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './App.css'
 import { submitContactForm } from './lib/supabase'
 
@@ -67,6 +68,7 @@ const socialLinks: SocialLink[] = [
 ]
 
 function App() {
+  const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -81,6 +83,8 @@ function App() {
   const handleCTAClick = (blockId: string) => {
     if (blockId === 'contact') {
       setIsModalOpen(true)
+    } else if (blockId === 'skills') {
+      navigate('/skills')
     } else {
       console.log(`CTA clicked for ${blockId}`)
     }
