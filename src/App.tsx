@@ -67,12 +67,53 @@ const socialLinks: SocialLink[] = [
   { icon: 'fas fa-envelope', url: '#', label: 'Email' },
 ]
 
+const helloWorldSnippets = [
+  { lang: 'Arduino', code: 'Serial.println("Hello World");' },
+  { lang: 'Bash', code: 'echo "Hello World"' },
+  { lang: 'BASIC', code: 'PRINT "Hello World"' },
+  { lang: 'C', code: 'printf("Hello World\\n");' },
+  { lang: 'C++', code: 'std::cout << "Hello World" << std::endl;' },
+  { lang: 'C#', code: 'Console.WriteLine("Hello World");' },
+  { lang: 'CoffeeScript', code: 'console.log "Hello World"' },
+  { lang: 'D', code: 'writeln("Hello World");' },
+  { lang: 'Fortran', code: 'WRITE(*,*) "Hello World"' },
+  { lang: 'Go', code: 'fmt.Println("Hello World")' },
+  { lang: 'Java', code: 'System.out.println("Hello World");' },
+  { lang: 'JavaScript', code: 'console.log("Hello World");' },
+  { lang: 'Julia', code: 'println("Hello World")' },
+  { lang: 'Kotlin', code: 'println("Hello World")' },
+  { lang: 'LaTeX', code: '\\documentclass{article}\\begin{document}Hello World\\end{document}' },
+  { lang: 'Make', code: 'all:\\n\\t@echo "Hello World"' },
+  { lang: 'Matlab', code: 'disp(\'Hello World\')' },
+  { lang: 'Node.js', code: 'console.log("Hello World");' },
+  { lang: 'Pascal', code: 'writeln(\'Hello World\');' },
+  { lang: 'Perl', code: 'print "Hello World\\n";' },
+  { lang: 'PHP', code: 'echo "Hello World";' },
+  { lang: 'Python 2', code: 'print "Hello World"' },
+  { lang: 'Python 3', code: 'print("Hello World")' },
+  { lang: 'R', code: 'cat("Hello World\\n")' },
+  { lang: 'Ruby', code: 'puts "Hello World"' },
+  { lang: 'Rust', code: 'println!("Hello World");' },
+  { lang: 'Scala', code: 'println("Hello World")' },
+  { lang: 'SQL', code: 'SELECT \'Hello World\';' },
+  { lang: 'Swift', code: 'print("Hello World")' },
+  { lang: 'TypeScript', code: 'console.log("Hello World");' },
+  { lang: 'VimScript', code: 'echo "Hello World"' },
+  { lang: 'Visual Basic', code: 'Console.WriteLine("Hello World")' }
+]
+
+function getRandomHelloWorld(): string {
+  const randomSnippet = helloWorldSnippets[Math.floor(Math.random() * helloWorldSnippets.length)]
+  return `${randomSnippet.lang}: ${randomSnippet.code}`
+}
+
 function App() {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [helloWorld, setHelloWorld] = useState(getRandomHelloWorld())
   const [formData, setFormData] = useState({
     requestType: '',
     email: '',
@@ -184,7 +225,14 @@ function App() {
             LET'S GET TO WORK
             <i className="fas fa-arrow-right"></i>
           </button>
-          <div className="availability">Hello World</div>
+          <div 
+            className="availability" 
+            onClick={() => setHelloWorld(getRandomHelloWorld())}
+            style={{ cursor: 'pointer' }}
+            title="Click for a new random Hello World"
+          >
+            {helloWorld}
+          </div>
         </div>
       </header>
 
@@ -275,34 +323,6 @@ function App() {
           </section>
         ))}
       </main>
-
-      {/* Social Section */}
-      <section className="social-section">
-        <div className="social-icons">
-          {socialLinks.map((social, index) => (
-            <a 
-              key={index}
-              href={social.url} 
-              className="social-icon"
-              aria-label={social.label}
-            >
-              <i className={social.icon}></i>
-            </a>
-          ))}
-        </div>
-        <div className="social-text">
-          <h2>GET MORE FROM JIMMY TRON</h2>
-          <p>Connect with me on social media for the latest updates, tech insights, and project showcases. Follow along as I continue to make IT happen.</p>
-        </div>
-        <div className="social-cta-box">
-          <div className="cta-graphic">JT</div>
-          <div className="cta-title">ENGAGE MORE</div>
-          <button className="btn-cta" onClick={() => handleCTAClick('social')}>
-            FOLLOW NOW
-            <i className="fas fa-arrow-right"></i>
-          </button>
-        </div>
-      </section>
 
       {/* Contact Modal */}
       {isModalOpen && (
@@ -451,9 +471,23 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="footer-top">
-          <div className="footer-language">
-            <span>ENGLISH</span>
-            <i className="fas fa-chevron-down"></i>
+          <div className="footer-left">
+            <div className="footer-language">
+              <span>EN</span>
+              <i className="fas fa-chevron-down"></i>
+            </div>
+            <div className="footer-social">
+              {socialLinks.map((social, index) => (
+                <a 
+                  key={index}
+                  href={social.url} 
+                  className="footer-social-icon"
+                  aria-label={social.label}
+                >
+                  <i className={social.icon}></i>
+                </a>
+              ))}
+            </div>
           </div>
           <div className="footer-platforms">
             <span>WEB</span>

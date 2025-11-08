@@ -6,14 +6,13 @@
 
 /* Header */
 .skills-header {
-  background-color: #0a0a0a;
+  background-color: transparent;
   border-bottom: 1px solid rgba(0, 255, 136, 0.1);
-  padding: 2rem 4rem;
+  padding: 1rem 4rem;
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(10px);
-  background-color: rgba(10, 10, 10, 0.95);
 }
 
 .btn-back {
@@ -29,7 +28,7 @@
   align-items: center;
   gap: 0.75rem;
   transition: all 0.3s ease;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -41,10 +40,10 @@
 }
 
 .skills-header-content h1 {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: 900;
   letter-spacing: 4px;
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.25rem 0;
   background: linear-gradient(135deg, #ffffff 0%, #00ff88 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -52,7 +51,7 @@
 }
 
 .skills-header-content p {
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   color: #b0b0b0;
   margin: 0;
 }
@@ -95,6 +94,15 @@
   justify-content: center;
   font-size: 6rem;
   color: rgba(0, 255, 136, 0.5);
+}
+
+.avatar-image {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 3px solid rgba(0, 255, 136, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
 }
 
 .profile-info h2 {
@@ -321,25 +329,48 @@
   border: 2px solid rgba(0, 255, 136, 0.2);
   border-radius: 12px;
   padding: 2.5rem;
+  overflow: hidden;
+}
+
+.tools-grid-wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
 }
 
 .tools-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: flex;
   gap: 1.5rem;
+  animation: scroll-left 20s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.tools-grid:hover {
+  animation-play-state: paused;
 }
 
 .tool-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1rem;
+  min-width: 180px;
   padding: 1.5rem;
   background-color: rgba(0, 255, 136, 0.05);
   border: 2px solid rgba(0, 255, 136, 0.2);
   border-radius: 8px;
   transition: all 0.3s ease;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .tool-item:hover {
@@ -358,6 +389,111 @@
   font-weight: 600;
   color: #ffffff;
   text-align: center;
+}
+
+/* Footer */
+.footer {
+  background-color: #0a0a0a;
+  padding: 3rem 4rem;
+  border-top: 1px solid rgba(0, 255, 136, 0.1);
+}
+
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-language {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.footer-platforms {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.footer-platforms span {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.footer-platforms span:hover {
+  opacity: 1;
+  color: #00ff88;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap;
+}
+
+.footer-social-icon {
+  color: #ffffff;
+  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(0, 255, 136, 0.3);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.footer-social-icon:hover {
+  color: #00ff88;
+  border-color: #00ff88;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 20px rgba(0, 255, 136, 0.4);
+}
+
+.footer-bottom {
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0, 255, 136, 0.1);
+}
+
+.footer-copyright {
+  text-align: center;
+  color: #666666;
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.footer-copyright p {
+  margin: 0;
+}
+
+.footer-copyright p:last-child {
+  color: #00ff88;
+  font-weight: 600;
+  margin-top: 0.5rem;
 }
 
 /* Responsive */
@@ -391,8 +527,8 @@
     grid-template-columns: 1fr;
   }
 
-  .tools-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .footer {
+    padding: 2.5rem 2rem;
   }
 }
 
@@ -423,8 +559,23 @@
     font-size: 2rem;
   }
 
-  .tools-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .footer {
+    padding: 2rem 1.5rem;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-social {
+    gap: 0.75rem;
+  }
+
+  .footer-social-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
   }
 }
 
