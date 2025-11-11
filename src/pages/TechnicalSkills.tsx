@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './TechnicalSkills.css'
 
@@ -61,8 +62,30 @@ const certifications = [
   { name: 'DevOps Expert', icon: 'fas fa-award', year: '2023' },
 ]
 
+interface SocialLink {
+  icon: string
+  url: string
+  label: string
+}
+
+const socialLinks: SocialLink[] = [
+  { icon: 'fab fa-github', url: '#', label: 'GitHub' },
+  { icon: 'fab fa-linkedin', url: '#', label: 'LinkedIn' },
+  { icon: 'fa-brands fa-x', url: '#', label: 'X' },
+  { icon: 'fab fa-medium', url: '#', label: 'Medium' },
+  { icon: 'fab fa-hashnode', url: '#', label: 'Hashnode' },
+  { icon: 'fas fa-envelope', url: '#', label: 'Email' },
+]
+
+// Profile avatar URL - set this to your image URL
+const profileAvatarUrl = 'https://photos.app.goo.gl/jrHCbPDexUjz7p6n8'
+
 export default function TechnicalSkills() {
   const navigate = useNavigate()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <div className="technical-skills-page">
@@ -82,9 +105,17 @@ export default function TechnicalSkills() {
         {/* Profile Summary */}
         <section className="profile-summary">
           <div className="profile-avatar">
-            <div className="avatar-placeholder">
-              <i className="fas fa-user-circle"></i>
-            </div>
+            {profileAvatarUrl ? (
+              <img 
+                src={profileAvatarUrl} 
+                alt="Profile Avatar" 
+                className="avatar-image"
+              />
+            ) : (
+              <div className="avatar-placeholder">
+                <i className="fas fa-user-circle"></i>
+              </div>
+            )}
           </div>
           <div className="profile-info">
             <h2>JIMMY TRON</h2>
@@ -178,34 +209,97 @@ export default function TechnicalSkills() {
         {/* Tools & Technologies */}
         <section className="tools-card">
           <h3 className="category-title">Daily Tools</h3>
-          <div className="tools-grid">
-            <div className="tool-item">
-              <i className="fab fa-github"></i>
-              <span>GitHub</span>
-            </div>
-            <div className="tool-item">
-              <i className="fas fa-code-branch"></i>
-              <span>VS Code</span>
-            </div>
-            <div className="tool-item">
-              <i className="fab fa-linux"></i>
-              <span>Linux</span>
-            </div>
-            <div className="tool-item">
-              <i className="fab fa-npm"></i>
-              <span>NPM</span>
-            </div>
-            <div className="tool-item">
-              <i className="fas fa-terminal"></i>
-              <span>Terminal</span>
-            </div>
-            <div className="tool-item">
-              <i className="fab fa-slack"></i>
-              <span>Slack</span>
+          <div className="tools-grid-wrapper">
+            <div className="tools-grid">
+              <div className="tool-item">
+                <i className="fab fa-github"></i>
+                <span>GitHub</span>
+              </div>
+              <div className="tool-item">
+                <i className="fas fa-code-branch"></i>
+                <span>VS Code</span>
+              </div>
+              <div className="tool-item">
+                <i className="fab fa-linux"></i>
+                <span>Linux</span>
+              </div>
+              <div className="tool-item">
+                <i className="fab fa-npm"></i>
+                <span>NPM</span>
+              </div>
+              <div className="tool-item">
+                <i className="fas fa-terminal"></i>
+                <span>Terminal</span>
+              </div>
+              <div className="tool-item">
+                <i className="fab fa-slack"></i>
+                <span>Slack</span>
+              </div>
+              {/* Duplicate items for infinite loop */}
+              <div className="tool-item">
+                <i className="fab fa-github"></i>
+                <span>GitHub</span>
+              </div>
+              <div className="tool-item">
+                <i className="fas fa-code-branch"></i>
+                <span>VS Code</span>
+              </div>
+              <div className="tool-item">
+                <i className="fab fa-linux"></i>
+                <span>Linux</span>
+              </div>
+              <div className="tool-item">
+                <i className="fab fa-npm"></i>
+                <span>NPM</span>
+              </div>
+              <div className="tool-item">
+                <i className="fas fa-terminal"></i>
+                <span>Terminal</span>
+              </div>
+              <div className="tool-item">
+                <i className="fab fa-slack"></i>
+                <span>Slack</span>
+              </div>
             </div>
           </div>
         </section>
       </div>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="footer-top">
+          <div className="footer-left">
+            <div className="footer-language">
+              <span>EN</span>
+              <i className="fas fa-chevron-down"></i>
+            </div>
+            <div className="footer-social">
+              {socialLinks.map((social, index) => (
+                <a 
+                  key={index}
+                  href={social.url} 
+                  className="footer-social-icon"
+                  aria-label={social.label}
+                >
+                  <i className={social.icon}></i>
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="footer-platforms">
+            <span>WEB</span>
+            <span>MOBILE</span>
+            <span>CLOUD</span>
+            <span>DEVOPS</span>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <div className="footer-copyright">
+            <p>&copy; {new Date().getFullYear()} Jimmy Tron. All rights reserved.</p>
+            <p>Make IT Happen</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
