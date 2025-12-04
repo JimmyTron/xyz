@@ -85,6 +85,8 @@ function App() {
       setIsModalOpen(true)
     } else if (blockId === 'skills') {
       navigate('/skills')
+    } else if (blockId === 'portfolio') {
+      navigate('/portfolio')
     } else {
       console.log(`CTA clicked for ${blockId}`)
     }
