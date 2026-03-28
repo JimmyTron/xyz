@@ -28,7 +28,7 @@ export default function BlogPost() {
       <div className="blog-post-page">
         <div className="error-container">
           <h1>Post Not Found</h1>
-          <p>{error || 'The post you're looking for doesn't exist.'}</p>
+          <p>{error || "The post you're looking for doesn't exist."}</p>
           <button onClick={() => navigate('/blog')} className="btn-back">
             Back to Blog
           </button>
