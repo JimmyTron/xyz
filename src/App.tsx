@@ -59,12 +59,12 @@ interface SocialLink {
 }
 
 const socialLinks: SocialLink[] = [
-  { icon: 'fab fa-github', url: '#', label: 'GitHub' },
-  { icon: 'fab fa-linkedin', url: '#', label: 'LinkedIn' },
-  { icon: 'fa-brands fa-x', url: '#', label: 'X' },
-  { icon: 'fab fa-medium', url: '#', label: 'Medium' },
-  { icon: 'fab fa-hashnode', url: '#', label: 'Hashnode' },
-  { icon: 'fas fa-envelope', url: '#', label: 'Email' },
+  { icon: 'fab fa-linkedin', url: 'https://www.linkedin.com/recs/give/?senderId=jimmytron', label: 'LinkedIn' },
+  { icon: 'fab fa-github', url: 'https://github.com/JimmyTron', label: 'GitHub' },
+  { icon: 'fab fa-medium', url: 'https://medium.com/@otienojames9', label: 'Medium' },
+  { icon: 'fa-brands fa-x', url: 'https://x.com/jimmytron_ke', label: 'X' },
+  { icon: 'fab fa-hashnode', url: 'https://hashnode.com/@jimmyoty', label: 'Hashnode' },
+  { icon: 'fas fa-envelope', url: 'mailto:oduorjames@hotmail.com', label: 'Email' },
 ]
 
 function App() {
