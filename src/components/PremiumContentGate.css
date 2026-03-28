@@ -1,0 +1,142 @@
+.premium-gate {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  color: #ffffff;
+  padding: 2rem;
+}
+
+.premium-gate-content {
+  max-width: 600px;
+  text-align: center;
+  background: #1a1a1a;
+  border: 2px solid #00ff88;
+  border-radius: 12px;
+  padding: 3rem;
+}
+
+.premium-icon {
+  font-size: 4rem;
+  color: #ffd700;
+  margin-bottom: 1.5rem;
+}
+
+.premium-gate-content h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #00ff88;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+}
+
+.premium-gate-content > p {
+  font-size: 1.125rem;
+  color: #888;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.premium-benefits {
+  text-align: left;
+  background: #0a0a0a;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.premium-benefits h3 {
+  color: #00ff88;
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+}
+
+.premium-benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.premium-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  color: #e0e0e0;
+}
+
+.premium-benefits li i {
+  color: #00ff88;
+}
+
+.premium-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-upgrade,
+.btn-signin {
+  padding: 1rem 2rem;
+  background: #00ff88;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-upgrade:hover,
+.btn-signin:hover {
+  background: #00cc6a;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+}
+
+.btn-back {
+  padding: 1rem 2rem;
+  background: transparent;
+  color: #00ff88;
+  border: 2px solid #00ff88;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+  background: #00ff88;
+  color: #0a0a0a;
+}
+
+@media (max-width: 768px) {
+  .premium-gate-content {
+    padding: 2rem 1.5rem;
+  }
+
+  .premium-gate-content h1 {
+    font-size: 2rem;
+  }
+
+  .premium-actions {
+    flex-direction: column;
+  }
+
+  .btn-upgrade,
+  .btn-signin,
+  .btn-back {
+    width: 100%;
+  }
+}
+
+
+
+
+

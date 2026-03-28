@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSkills } from '../hooks/useSkills'
 import './TechnicalSkills.css'
 
 interface Skill {
@@ -13,7 +14,8 @@ interface SkillCategory {
   skills: Skill[]
 }
 
-const skillCategories: SkillCategory[] = [
+// Fallback skills if API fails
+const fallbackSkillCategories: SkillCategory[] = [
   {
     title: 'Frontend Development',
     skills: [
@@ -78,10 +80,23 @@ const socialLinks: SocialLink[] = [
 ]
 
 // Profile avatar URL - set this to your image URL
-const profileAvatarUrl = 'https://photos.app.goo.gl/jrHCbPDexUjz7p6n8'
+const profileAvatarUrl = ''
 
 export default function TechnicalSkills() {
   const navigate = useNavigate()
+  const { skillsByCategory, loading, error } = useSkills()
+
+  // Convert API skills to UI format
+  const skillCategories: SkillCategory[] = skillsByCategory.length > 0
+    ? skillsByCategory.map(cat => ({
+        title: cat.category.title,
+        skills: cat.skills.map(skill => ({
+          name: skill.name,
+          icon: skill.icon || 'fas fa-code',
+          color: skill.color || '#00ff88'
+        }))
+      }))
+    : fallbackSkillCategories
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -143,6 +158,8 @@ export default function TechnicalSkills() {
         </section>
 
         {/* Skills Grid */}
+        {loading && <div className="loading">Loading skills...</div>}
+        {error && <div className="error">Error loading skills. Showing fallback data.</div>}
         <div className="skills-grid">
           {skillCategories.map((category, idx) => (
             <section key={idx} className="skill-category-card">

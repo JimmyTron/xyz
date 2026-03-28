@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { usePortfolio } from '../hooks/usePortfolio'
+import type { PortfolioProject } from '../lib/api/portfolio'
 import './Portfolio.css'
 
 interface Project {
-  id: number
+  id: string
   title: string
   category: string
   description: string
@@ -20,7 +22,8 @@ interface Project {
   }
 }
 
-const projects: Project[] = [
+// Fallback projects if API fails
+const fallbackProjects: Project[] = [
   {
     id: 1,
     title: 'E-Commerce Platform',
@@ -133,8 +136,25 @@ const projects: Project[] = [
 
 export default function Portfolio() {
   const navigate = useNavigate()
+  const { projects: apiProjects, loading, error } = usePortfolio()
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Convert API projects to UI format
+  const projects: Project[] = apiProjects.length > 0 
+    ? apiProjects.map((p: PortfolioProject) => ({
+        id: p.id || '',
+        title: p.title,
+        category: 'Project', // Default category
+        description: p.description || p.title,
+        shortDescription: p.description?.substring(0, 100) || p.title,
+        image: p.image_url || 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80',
+        technologies: p.technologies || [],
+        liveUrl: p.live_url,
+        githubUrl: p.github_url,
+        features: [] // Features not in API schema yet
+      }))
+    : fallbackProjects
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -185,6 +205,9 @@ export default function Portfolio() {
             <h3>FEATURED PROJECTS</h3>
             <div className="header-accent"></div>
           </div>
+          
+          {loading && <div className="loading">Loading projects...</div>}
+          {error && <div className="error">Error loading projects. Showing fallback data.</div>}
           
           <div className="projects-grid">
             {projects.map((project) => (

@@ -1,0 +1,15 @@
+# Query: profileAvatarUrl
+# ContextLines: 1
+
+3 results - 1 file
+
+src/pages/TechnicalSkills.tsx:
+   80  // Profile avatar URL - set this to your image URL
+   81: const profileAvatarUrl = ''
+   82  
+
+  107            <div className="profile-avatar">
+  108:             {profileAvatarUrl ? (
+  109                <img 
+  110:                 src={profileAvatarUrl} 
+  111                  alt="Profile Avatar" 
